@@ -13,7 +13,7 @@ const ScanHistory = () => {
     try {
       const res = await API.get('/api/scan-history');  // Updated path
       if (Array.isArray(res.data)) {
-        setHistory(res.data.reverse());
+        setHistory(res.data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)));
       }
     } catch (error) {
       console.error('Failed to fetch scan history:', error);
@@ -46,7 +46,7 @@ const ScanHistory = () => {
           <tbody>
             {history.length > 0 ? history.map((scan, index) => (
               <tr key={scan.scan_id}>
-                <td>{history.length - index}</td>
+                <td>{index + 1}</td>
                 <td>{scan.project_id}</td>
                 <td style={{ wordBreak: 'break-word' }}>{scan.scan_id}</td>
                 <td>{new Date(scan.timestamp).toLocaleString()}</td>

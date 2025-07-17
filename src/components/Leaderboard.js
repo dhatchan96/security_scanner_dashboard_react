@@ -23,8 +23,11 @@ const Leaderboard = () => {
   return (
     <div className="container mt-4">
       <h2 className="mb-4">Project Leaderboard</h2>
-      <div className="table-responsive">
-        <table className="table table-bordered table-hover">
+      <div style={{ width: '100%'}}>
+        <table
+          className="table table-bordered table-hover align-middle table-sm"
+          style={{ minWidth: '700px' }}
+        >
           <thead className="table-light">
             <tr>
               <th>#</th>
@@ -45,7 +48,7 @@ const Leaderboard = () => {
             {leaderboard.length > 0 ? leaderboard.map((p, i) => (
               <tr key={p.project_id}>
                 <td>{i + 1}</td>
-                <td>{p.project_id}</td>
+                <td style={{ maxWidth: '250px', wordBreak: 'break-word' }}>{p.project_id}</td>
                 <td>{p.score}</td>
                 <td>{p.total_issues}</td>
                 <td><span className="severity-BLOCKER">{p.blocker_issues}</span></td>
