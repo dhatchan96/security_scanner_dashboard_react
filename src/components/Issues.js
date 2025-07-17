@@ -40,12 +40,12 @@ const Issues = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container-fluid mt-4 px-5">
       <h2 className="mb-4">All Security Issues</h2>
-
+ 
       <div className="section">
         <div className="table-responsive w-100">
-          <table className="table table-bordered table-hover align-middle table-sm" style={{ minWidth: '1000px' }}>
+          <table className="table table-bordered table-striped table-hover align-middle table-sm" style={{ minWidth: '1000px' }}>
             <thead className="table-light">
               <tr>
                 <th>#</th>

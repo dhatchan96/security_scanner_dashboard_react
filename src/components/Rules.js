@@ -88,51 +88,53 @@ const Rules = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container-fluid mt-4 px-5">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Security Rules</h2>
         <button className="btn btn-primary" onClick={openCreateModal}>Create New Rule</button>
       </div>
 
-      <div className="table-responsive">
-        <table className="table table-bordered table-hover">
-          <thead className="table-light">
-            <tr>
-              <th>Rule ID</th>
-              <th>Name</th>
-              <th>Language</th>
-              <th>Severity</th>
-              <th>Type</th>
-              <th>Enabled</th>
-              <th className="text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rules.map((rule) => (
-              <tr key={rule.id}>
-                <td>{rule.id}</td>
-                <td>{rule.name}</td>
-                <td>{rule.language}</td>
-                <td><span className={`severity-${rule.severity}`}>{rule.severity}</span></td>
-                <td>{rule.type}</td>
-                <td>{rule.enabled ? 'Yes' : 'No'}</td>
-                <td className="text-center">
-                  <div className="d-flex gap-2 justify-content-center">
-                    <button className="btn btn-sm btn-primary" onClick={() => openEditModal(rule)}>Edit</button>
-                    <button className="btn btn-sm btn-danger" onClick={() => handleDelete(rule.id)}>Delete</button>
-                    <button
-                      className={`btn btn-sm ${rule.enabled ? 'btn-warning' : 'btn-success'}`}
-                      onClick={() => handleToggle(rule.id, !rule.enabled)}
-                    >
-                      {rule.enabled ? 'Disable' : 'Enable'}
-                    </button>
-                  </div>
-                </td>
+      <div className="section">
+        <div className="table-responsive">
+          <table className="table table-bordered table-hover">
+            <thead className="table-light">
+              <tr>
+                <th>Rule ID</th>
+                <th>Name</th>
+                <th>Language</th>
+                <th>Severity</th>
+                <th>Type</th>
+                <th>Enabled</th>
+                <th className="text-center">Actions</th>
               </tr>
-            ))}
-            {rules.length === 0 && <tr><td colSpan="7" className="text-center">No rules found.</td></tr>}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {rules.map((rule) => (
+                <tr key={rule.id}>
+                  <td>{rule.id}</td>
+                  <td>{rule.name}</td>
+                  <td>{rule.language}</td>
+                  <td><span className={`severity-${rule.severity}`}>{rule.severity}</span></td>
+                  <td>{rule.type}</td>
+                  <td>{rule.enabled ? 'Yes' : 'No'}</td>
+                  <td className="text-center">
+                    <div className="d-flex gap-2 justify-content-center">
+                      <button className="btn btn-sm btn-primary" onClick={() => openEditModal(rule)}>Edit</button>
+                      <button className="btn btn-sm btn-danger" onClick={() => handleDelete(rule.id)}>Delete</button>
+                      <button
+                        className={`btn btn-sm ${rule.enabled ? 'btn-warning' : 'btn-success'}`}
+                        onClick={() => handleToggle(rule.id, !rule.enabled)}
+                      >
+                        {rule.enabled ? 'Disable' : 'Enable'}
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {rules.length === 0 && <tr><td colSpan="7" className="text-center">No rules found.</td></tr>}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {showModal && (

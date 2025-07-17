@@ -77,7 +77,7 @@ const QualityGates = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container-fluid mt-4 px-5">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h2>Quality Gates</h2>
         <button className="btn btn-primary" onClick={openCreateModal}>Create New Gate</button>

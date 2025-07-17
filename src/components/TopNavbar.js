@@ -4,10 +4,10 @@ import { FaTachometerAlt, FaFolder, FaBug, FaClipboardList, FaShieldAlt, FaTroph
 
 export default function TopNavbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm px-3">
+    <nav className="navbar navbar-expand-lg navbar-dark shadow-sm px-3" style={{ backgroundColor: '#012069' }}>
       <span className="navbar-brand fw-bold">
         <FaShieldAlt className="me-2" />
-        Enhanced Security Scanner
+        Secure Pro
       </span>
 
       <div className="collapse navbar-collapse">
@@ -55,18 +55,18 @@ export default function TopNavbar() {
         </ul>
 
         <ul className="navbar-nav ms-auto">
-          <li className="nav-item me-3">
+          {/* <li className="nav-item me-3">
             <span className="position-relative">
               <FaBell />
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                 3
               </span>
             </span>
-          </li>
+          </li> */}
           <li className="nav-item d-flex align-items-center text-white">
-            <div className="bg-primary rounded-circle text-center me-2" style={{ width: '24px', height: '24px', lineHeight: '24px' }}>
+            {/* <div className="bg-primary rounded-circle text-center me-2" style={{ width: '24px', height: '24px', lineHeight: '24px' }}>
               <span style={{ fontSize: '14px' }}>A</span>
-            </div>
+            </div> */}
             Admin User <FaChevronDown className="ms-1" />
           </li>
         </ul>

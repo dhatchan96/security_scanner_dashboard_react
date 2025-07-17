@@ -22,52 +22,54 @@ const ScanHistory = () => {
 
   return (
     <div className="container-fluid mt-4 px-5">
-      <h2 className="mb-4">Scan History</h2>
-      <div className="table-responsive">
-        <table className="table table-bordered table-hover">
-          <thead className="table-light">
-            <tr>
-              <th>#</th>
-              <th>Project</th>
-              <th>Scan ID</th>
-              <th>Timestamp</th>
-              <th>Files</th>
-              <th>LOC</th>
-              <th>Issues</th>
-              <th>Security</th>
-              <th>Reliability</th>
-              <th>Maintainability</th>
-              <th>Quality Gate</th>
-              <th>Coverage (%)</th>
-              <th>Duplication (%)</th>
-              <th>Duration</th>
-            </tr>
-          </thead>
-          <tbody>
-            {history.length > 0 ? history.map((scan, index) => (
-              <tr key={scan.scan_id}>
-                <td>{index + 1}</td>
-                <td>{scan.project_id}</td>
-                <td style={{ wordBreak: 'break-word' }}>{scan.scan_id}</td>
-                <td>{new Date(scan.timestamp).toLocaleString()}</td>
-                <td>{scan.files_scanned}</td>
-                <td>{scan.lines_of_code.toLocaleString()}</td>
-                <td>{scan.issues}</td>
-                <td><span className={`rating-${scan.security_rating}`}>{scan.security_rating}</span></td>
-                <td><span className={`rating-${scan.reliability_rating}`}>{scan.reliability_rating}</span></td>
-                <td><span className={`rating-${scan.maintainability_rating}`}>{scan.maintainability_rating}</span></td>
-                <td><span className={`quality-gate-${scan.quality_gate_status}`}>{scan.quality_gate_status}</span></td>
-                <td>{scan.coverage}%</td>
-                <td>{scan.duplications}%</td>
-                <td>{(scan.duration_ms / 1000).toFixed(2)}s</td>
-              </tr>
-            )) : (
+      <h2 className="mb-4">Scan History</h2> 
+      <div className="section">
+        <div className="table-responsive">
+          <table className="table table-bordered table-striped table-hover">
+            <thead className="table-light">
               <tr>
-                <td colSpan="14" className="text-center">No scan history available.</td>
+                <th>#</th>
+                <th>Project</th>
+                <th>Scan ID</th>
+                <th>Timestamp</th>
+                <th>Files</th>
+                <th>LOC</th>
+                <th>Issues</th>
+                <th>Security</th>
+                <th>Reliability</th>
+                <th>Maintainability</th>
+                <th>Quality Gate</th>
+                <th>Coverage (%)</th>
+                <th>Duplication (%)</th>
+                <th>Duration</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {history.length > 0 ? history.map((scan, index) => (
+                <tr key={scan.scan_id}>
+                  <td>{index + 1}</td>
+                  <td>{scan.project_id}</td>
+                  <td style={{ wordBreak: 'break-word' }}>{scan.scan_id}</td>
+                  <td>{new Date(scan.timestamp).toLocaleString()}</td>
+                  <td>{scan.files_scanned}</td>
+                  <td>{scan.lines_of_code.toLocaleString()}</td>
+                  <td>{scan.issues}</td>
+                  <td><span className={`rating-${scan.security_rating}`}>{scan.security_rating}</span></td>
+                  <td><span className={`rating-${scan.reliability_rating}`}>{scan.reliability_rating}</span></td>
+                  <td><span className={`rating-${scan.maintainability_rating}`}>{scan.maintainability_rating}</span></td>
+                  <td><span className={`quality-gate-${scan.quality_gate_status}`}>{scan.quality_gate_status}</span></td>
+                  <td>{scan.coverage}%</td>
+                  <td>{scan.duplications}%</td>
+                  <td>{(scan.duration_ms / 1000).toFixed(2)}s</td>
+                </tr>
+              )) : (
+                <tr>
+                  <td colSpan="14" className="text-center">No scan history available.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

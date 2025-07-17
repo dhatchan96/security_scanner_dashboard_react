@@ -65,7 +65,7 @@ const AdminPanel = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container-fluid mt-4 px-5">
       <h2 className="mb-4">Admin Panel</h2>
 
       {message && (

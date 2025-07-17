@@ -56,14 +56,14 @@ const MetricsSummary = () => {
         label: 'Issues Found',
         data: trends.issues_trend.map((t) => t.value),
         fill: true,
-        backgroundColor: 'rgba(255,99,132,0.1)',
-        borderColor: 'rgba(255,99,132,1)'
+        backgroundColor: 'rgba(170, 18, 41,0.1)',
+        borderColor: 'rgba(170,18,41,1)'
       },
       {
         label: 'Security Rating Score (A=1)',
         data: trends.security_rating_trend.map((t) => t.value),
         fill: false,
-        borderColor: 'rgba(54,162,235,1)',
+        borderColor: 'rgba(0,81,194,1)',
         borderDash: [5, 5]
       }
     ]
@@ -75,7 +75,7 @@ const MetricsSummary = () => {
       {
         data: Object.values(issues_by_severity),
         backgroundColor: [
-          '#dc3545', '#fd7e14', '#ffc107', '#0d6efd', '#6c757d'
+          '#012069', '#003091', '#AA1229', '#0051C2', '#6c757d'
         ],
       }
     ]
@@ -90,7 +90,7 @@ const MetricsSummary = () => {
     datasets: [
       {
         label: 'Count',
-        backgroundColor: ['#198754', '#ffc107', '#fd7e14', '#dc3545', '#6c757d'],
+        backgroundColor: ['#012069', '#003091', '#fd7e14', '#AA1229', '#0051C2'],
         data: ratingCounts
       }
     ]
@@ -102,13 +102,13 @@ const MetricsSummary = () => {
       {
         label: 'Frontend Team',
         data: [95, 90, 85, 92, 88],
-        backgroundColor: 'rgba(13, 110, 253, 0.2)',
+        backgroundColor: 'rgba(1, 32, 105, 0.2)',
         borderColor: '#0d6efd'
       },
       {
         label: 'Backend Team',
         data: [90, 85, 88, 86, 84],
-        backgroundColor: 'rgba(220, 53, 69, 0.2)',
+        backgroundColor: 'rgba(170, 18, 41, 0.2)',
         borderColor: '#dc3545'
       }
     ]
@@ -120,7 +120,7 @@ const MetricsSummary = () => {
       {
         data: Object.values(issues_by_type),
         backgroundColor: [
-          '#dc3545', '#fd7e14', '#ffc107', '#0d6efd', '#20c997'
+          '#012069', '#003091', '#fd7e14', '#AA1229', '#0051C2'
         ]
       }
     ]
@@ -132,14 +132,14 @@ const MetricsSummary = () => {
       {
         label: 'Count',
         data: [3, 5, 7, 10],
-        backgroundColor: ['#20c997', '#ffc107', '#fd7e14', '#dc3545']
+        backgroundColor: ['#AA1229', '#0051C2', '#003091', '#012069']
       }
     ]
   };
 
   return (
-    <div className="container mt-4">
-      <h2 className="mb-4">📊 Security Analytics & Insights</h2>
+    <div className="container-fluid mt-4 px-5">
+      <h2 className="mb-4">Security Analytics & Insights</h2>
 
       <div className="row g-4">
         <div className="col-md-6 col-lg-4">
