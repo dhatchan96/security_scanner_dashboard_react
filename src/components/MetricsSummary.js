@@ -138,7 +138,7 @@ const MetricsSummary = () => {
   };
 
   return (
-    <div className="container-fluid mt-4 px-5">
+    <div className="container-fluid mt-4 px-5 mb-5">
       <h2 className="mb-4">Security Analytics & Insights</h2>
 
       <div className="row g-4">
@@ -152,7 +152,9 @@ const MetricsSummary = () => {
         <div className="col-md-6 col-lg-4">
           <div className="card p-3 h-100">
             <h6 className="text-center">Issues by Severity</h6>
-            <Doughnut data={severityData} />
+            <div style={{ width: '400px', height: '400px', margin: '0 auto' }}>
+              <Doughnut data={severityData} />
+            </div>
           </div>
         </div>
 
@@ -166,14 +168,18 @@ const MetricsSummary = () => {
         <div className="col-md-6 col-lg-4">
           <div className="card p-3 h-100">
             <h6 className="text-center">Team Performance</h6>
-            <Radar data={radarData} />
+            <div style={{ width: '400px', height: '400px', margin: '0 auto' }}>
+              <Radar data={radarData} />
+            </div>
           </div>
         </div>
 
         <div className="col-md-6 col-lg-4">
           <div className="card p-3 h-100">
             <h6 className="text-center">Vulnerability Types</h6>
-            <Doughnut data={vulnTypeData} />
+            <div style={{ width: '400px', height: '400px', margin: '0 auto' }}>
+              <Doughnut data={vulnTypeData} />
+            </div>
           </div>
         </div>
 
