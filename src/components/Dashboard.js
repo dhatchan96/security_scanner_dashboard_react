@@ -10,6 +10,15 @@ const Dashboard = () => {
   const [health, setHealth] = useState(null);
   const [dragOver, setDragOver] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [malwareStats, setMalwareStats] = useState(null);
+  const [activeTab, setActiveTab] = useState("malware");
+
+  const malwareIssues = recentIssues.filter((i) =>
+  i.rule_id?.startsWith("MALWARE_")
+);
+const otherIssues = recentIssues.filter((i) =>
+  !i.rule_id?.startsWith("MALWARE_")
+);
 
   useEffect(() => {
     fetchMetrics();
@@ -22,6 +31,14 @@ const Dashboard = () => {
       if (res.data && !res.data.error) {
         setMetrics(res.data);
         setRecentIssues(res.data.recent_issues || []);
+        if (res.data.malware_patterns_found || res.data.malware_analysis) {
+          setMalwareStats({
+            count: res.data.malware_patterns_found || 0,
+            details: Object.entries(
+              res.data.malware_analysis.by_type || {}
+            ).map(([type, count]) => `${type}: ${count}`),
+          });
+        }
       }
     } catch (error) {
       console.error("Failed to fetch metrics:", error);
@@ -195,6 +212,23 @@ const Dashboard = () => {
     metrics: metricData,
   } = metrics;
 
+  const downloadCopilotPrompts = async () => {
+    try {
+      const res = await API.get("/api/copilot/prompts/download", {
+        responseType: "blob",
+      });
+
+      const blob = new Blob([res.data], { type: "application/zip" });
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = "copilot_prompts.zip";
+      link.click();
+    } catch (err) {
+      console.error("Failed to download prompts:", err);
+      alert("❌ Failed to download Copilot prompts.");
+    }
+  };
+
   return (
     <div className="container-fluid mt-4 px-5">
       {health && (
@@ -307,6 +341,35 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {malwareStats?.details?.length > 0 && (
+        <div className="section mt-5">
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <h2 className="mb-0">🛡️ Detected Malware Patterns</h2>
+          </div>
+          <div className="table-responsive w-100">
+            <table className="table table-bordered table-hover align-middle">
+              <thead className="table-danger">
+                <tr>
+                  <th>Rule Type</th>
+                  <th>Occurrences</th>
+                </tr>
+              </thead>
+              <tbody>
+                {malwareStats.details.map((entry, idx) => {
+                  const [type, count] = entry.split(":");
+                  return (
+                    <tr key={idx}>
+                      <td className="text-danger fw-bold">{type.trim()}</td>
+                      <td>{count.trim()}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
       <h2 className="mb-4">Overview</h2>
       <div className="row g-4 mb-4">
         {[
@@ -364,67 +427,99 @@ const Dashboard = () => {
         ))}
       </div>
 
+      <ul className="nav nav-tabs mb-3">
+        <li className="nav-item">
+          <button
+            className={`nav-link ${activeTab === "malware" ? "active" : ""}`}
+            onClick={() => setActiveTab("malware")}
+          >
+            🛡 Malware Issues
+          </button>
+        </li>
+        <li className="nav-item">
+          <button
+            className={`nav-link ${activeTab === "other" ? "active" : ""}`}
+            onClick={() => setActiveTab("other")}
+          >
+            📄 Other Issues
+          </button>
+        </li>
+      </ul>
+
       <div className="section">
-        <h2 className="mb-3">Recent Issues</h2>
-        <div className="table-responsive w-100">
-          <table className="table table-bordered table-hover align-middle">
-            <thead className="table-light">
-              <tr>
-                <th>Severity</th>
-                <th>Type</th>
-                <th>Rule</th>
-                <th>File</th>
-                <th>Line</th>
-                <th>Message</th>
-                <th>Recommendation</th>
-                <th className="text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentIssues.length > 0 ? (
-                recentIssues.map((issue) => (
-                  <tr key={issue.id}>
-                    <td>
-                      <span className={`severity-${issue.severity}`}>
-                        {issue.severity}
-                      </span>
-                    </td>
-                    <td>{issue.type}</td>
-                    <td>{issue.rule_id}</td>
-                    <td style={{ wordBreak: "break-word" }}>
-                      {issue.file_path}
-                    </td>
-                    <td className="text-center">{issue.line_number}</td>
-                    <td>{issue.message}</td>
-                    <td style={{ whiteSpace: "pre-wrap" }}>
-                      {issue.suggested_fix || "—"}
-                    </td>
-                    <td className="text-center">
-                      <div className="d-flex justify-content-center gap-2">
-                        <button className="btn btn-sm btn-primary">
-                          Details
-                        </button>
-                        <button
-                          className="btn btn-sm btn-success"
-                          onClick={() => resolveIssue(issue.id)}
-                        >
-                          Resolve
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="8" className="text-center">
-                    No issues found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+  <div className="d-flex justify-content-between align-items-center mb-3">
+    <h2 className="mb-0">
+      {activeTab === "malware" ? "🛡 Malware Issues" : "📄 Other Issues"}
+    </h2>
+    <button
+      className="btn btn-outline-info btn-sm"
+      onClick={downloadCopilotPrompts}
+    >
+      💡 Download Copilot Prompts
+    </button>
+  </div>
+
+  <div className="table-responsive w-100">
+    <table className="table table-bordered table-hover align-middle">
+      <thead className="table-light">
+        <tr>
+          <th>Severity</th>
+          <th>Type</th>
+          <th>Rule</th>
+          <th>File</th>
+          <th>Line</th>
+          <th>Message</th>
+          <th>Recommendation</th>
+          <th className="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {(activeTab === "malware" ? malwareIssues : otherIssues).length > 0 ? (
+          (activeTab === "malware" ? malwareIssues : otherIssues).map((issue) => (
+            <tr key={issue.id}>
+              <td>
+                <span
+                  className={
+                    issue.rule_id?.includes("MALWARE")
+                      ? "badge bg-danger"
+                      : `severity-${issue.severity}`
+                  }
+                >
+                  {issue.severity}
+                </span>
+              </td>
+              <td>{issue.type}</td>
+              <td>{issue.rule_id}</td>
+              <td style={{ wordBreak: "break-word" }}>{issue.file_path}</td>
+              <td className="text-center">{issue.line_number}</td>
+              <td>{issue.message}</td>
+              <td style={{ whiteSpace: "pre-wrap" }}>
+                {issue.suggested_fix || "—"}
+              </td>
+              <td className="text-center">
+                <div className="d-flex justify-content-center gap-2">
+                  <button className="btn btn-sm btn-primary">Details</button>
+                  <button
+                    className="btn btn-sm btn-success"
+                    onClick={() => resolveIssue(issue.id)}
+                  >
+                    Resolve
+                  </button>
+                </div>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="8" className="text-center">
+              No {activeTab === "malware" ? "malware" : "other"} issues found.
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
+</div>
     </div>
   );
 };
