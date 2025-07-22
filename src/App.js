@@ -1,35 +1,32 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Sidebar from './components/Sidebar';
-import Dashboard from './components/Dashboard';
-import Issues from './components/Issues';
-import Rules from './components/Rules';
-import QualityGates from './components/QualityGates';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ThreatGuardDashboard from './components/ThreatGuardDashboard';
+import ThreatIssues from './components/ThreatIssues';
+import ThreatShields from './components/ThreatShields';
+import ThreatIntelligence from './components/ThreatIntelligence';
 import AdminPanel from './components/AdminPanel';
-import Leaderboard from './components/Leaderboard';
 import HealthCheck from './components/HealthCheck';
 import ScanHistory from './components/ScanHistory';
 import MetricsSummary from './components/MetricsSummary';
-import TopNavbar from './components/TopNavbar';
-
-
+import ThreatGuardNavbar from './components/ThreatGuardNavbar';
+import ThreadDemo from './components/ThreadDemo';
 
 export default function App() {
   return (
     <Router>
-      <TopNavbar />
-      <div className="container-fluid mt-4 px-4">
+      <div style={{ backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
+        <ThreatGuardNavbar />
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/issues" element={<Issues />} />
-          <Route path="/rules" element={<Rules />} />
-          <Route path="/quality-gates" element={<QualityGates />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
-          <Route path="/summary" element={<MetricsSummary />} />
+          <Route path="/thread-demo" element={<ThreadDemo />} />
+          <Route path="/dashboard" element={<ThreatGuardDashboard />} />
+          <Route path="/threats" element={<ThreatIssues />} />
+          <Route path="/threat-shields" element={<ThreatShields />} />
+          <Route path="/threat-intelligence" element={<ThreatIntelligence />} />
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/scan-history" element={<ScanHistory />} />
           <Route path="/health" element={<HealthCheck />} />
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/summary" element={<MetricsSummary />} />
+          <Route path="/" element={<ThreatGuardDashboard />} />
         </Routes>
       </div>
     </Router>
