@@ -17,7 +17,7 @@ export default function App() {
       <div style={{ backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
         <ThreatGuardNavbar />
         <Routes>
-          <Route path="/thread-demo" element={<ThreadDemo />} />
+          {/* <Route path="/thread-demo" element={<ThreadDemo />} /> */}
           <Route path="/dashboard" element={<ThreatGuardDashboard />} />
           <Route path="/threats" element={<ThreatIssues />} />
           <Route path="/threat-shields" element={<ThreatShields />} />
@@ -27,6 +27,7 @@ export default function App() {
           <Route path="/health" element={<HealthCheck />} />
           <Route path="/summary" element={<MetricsSummary />} />
           <Route path="/" element={<ThreatGuardDashboard />} />
+          <Route path="/metrics" element={<MetricsSummary />} />
         </Routes>
       </div>
     </Router>

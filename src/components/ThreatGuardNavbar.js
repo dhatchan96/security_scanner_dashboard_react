@@ -8,6 +8,7 @@ import {
   FaCog,
   FaHistory,
   FaHeartbeat,
+  FaChartBar,
 } from "react-icons/fa";
 
 export default function ThreatGuardNavbar() {
@@ -26,7 +27,7 @@ export default function ThreatGuardNavbar() {
 
       <div className="collapse navbar-collapse">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <NavLink
               to="/thread-demo"
               className={({ isActive }) =>
@@ -41,7 +42,7 @@ export default function ThreatGuardNavbar() {
             >
               🧪 Thread Demo
             </NavLink>
-          </li>
+          </li> */}
           <li className="nav-item">
             <NavLink
               to="/dashboard"
@@ -104,6 +105,22 @@ export default function ThreatGuardNavbar() {
               })}
             >
               <FaBrain className="me-1" /> Threat Intel
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              to="/metrics"
+              className={({ isActive }) =>
+                `nav-link ${isActive ? "active" : ""}`
+              }
+              style={({ isActive }) => ({
+                color: isActive ? "#0d6efd" : "#222",
+                background: isActive ? "#e9f3ff" : "transparent",
+                borderRadius: "5px",
+                fontWeight: isActive ? "bold" : "normal",
+              })}
+            >
+              <FaChartBar className="me-1" /> Metrics
             </NavLink>
           </li>
           {/* <li className="nav-item">
